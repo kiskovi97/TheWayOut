@@ -9,13 +9,11 @@ namespace TheWayOut.Main
     {
         void Start()
         {
-            StartCoroutine(PlayAd());
+            AdsShower.LoadAd(AdEnded);
         }
 
-        private IEnumerator PlayAd()
+        private void AdEnded(bool success)
         {
-            yield return new WaitForSeconds(5);
-
             SceneLoader.LoadScene(SceneLoader.GAMEPLAY);
         }
     }

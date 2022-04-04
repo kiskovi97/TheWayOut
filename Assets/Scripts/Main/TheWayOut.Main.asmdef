@@ -2,7 +2,8 @@
     "name": "TheWayOut.Main",
     "rootNamespace": "",
     "references": [
-        "GUID:ee1a1b2c05a4a384ab6f09dc8a6354e7"
+        "GUID:ee1a1b2c05a4a384ab6f09dc8a6354e7",
+        "GUID:ff6de30450f3748908ff580f6ec64d9a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
