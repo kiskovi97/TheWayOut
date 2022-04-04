@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "d1c199aa",
         "name": "com.kiskovi.thewayout",
-        "processId": 8217,
+        "processId": 13235,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,12 @@
             "deviceId": "d1c199aa",
             "name": "com.kiskovi.thewayout",
             "processId": 8217,
+            "exited": true
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 13235,
             "exited": false
         }
     ],
