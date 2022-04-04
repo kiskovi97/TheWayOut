@@ -3862,6 +3862,7 @@ GameObject:
   - component: {fileID: 1165467676}
   - component: {fileID: 1165467677}
   - component: {fileID: 1165467678}
+  - component: {fileID: 1165467679}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -3919,6 +3920,20 @@ MonoBehaviour:
   - {fileID: 6194115916012010572, guid: 175142b9750c4004d8548cbf9052b286, type: 3}
   placementParent: {fileID: 1827590162}
   goalParent: {fileID: 1432516271}
+  maze: {fileID: 1165467679}
+--- !u!114 &1165467679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165467675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f675d057ceee97945aa2cb3e5eb29455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  column: 8
 --- !u!1001 &1176194946
 PrefabInstance:
   m_ObjectHideFlags: 0

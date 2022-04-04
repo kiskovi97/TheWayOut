@@ -9,6 +9,7 @@ namespace TheWayOut.Gameplay
         [SerializeField] private PuzzlePeace[] peacesPrefabs;
         [SerializeField] private Transform placementParent;
         [SerializeField] private Transform goalParent;
+        [SerializeField] private Maze maze;
 
         private void Start()
         {
@@ -29,6 +30,7 @@ namespace TheWayOut.Gameplay
             //    Debug.LogWarning("right");
             //if (peace.IsFreeWay(3))
             //    Debug.LogWarning("down");
+            maze.TryAddPeace(peace);
             GenerateNew();
         }
 

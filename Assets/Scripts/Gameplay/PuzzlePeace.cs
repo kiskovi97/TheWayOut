@@ -10,6 +10,8 @@ namespace TheWayOut.Gameplay
 
         [SerializeField] private bool[] freeWay;
 
+        internal int Index => InPlace.transform.GetSiblingIndex();
+
         internal override void SetInPlace(DragPlacement placement)
         {
             base.SetInPlace(placement);

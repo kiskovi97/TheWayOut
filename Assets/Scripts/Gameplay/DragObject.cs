@@ -12,7 +12,7 @@ namespace TheWayOut.Gameplay
         private CanvasGroup canvasGroup;
 
         private Vector3 lastPosition;
-        private DragPlacement InPlace;
+        protected DragPlacement InPlace;
 
         [NonSerialized] public bool isDragable = true;
 
