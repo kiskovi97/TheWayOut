@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TheWayOut.Gameplay
@@ -10,6 +10,12 @@ namespace TheWayOut.Gameplay
         [SerializeField] private int startRow;
         [SerializeField] private int endRow;
 
+        public int Column => column;
+        public int StartIndex => startRow * column;
+        public int EndIndex => (endRow + 1) * column - 1;
+
+        public event Action OnFinished;
+
         private Dictionary<int, PuzzlePeace> placedPeaces = new Dictionary<int, PuzzlePeace>();
 
         private HashSet<int> available = new HashSet<int>();
@@ -17,13 +23,23 @@ namespace TheWayOut.Gameplay
         public void GenerateRoot()
         {
             available = new HashSet<int>();
-            var first = startRow * column;
-            if (placedPeaces.ContainsKey(first))
-                GenerateRoot(first);
+            if (placedPeaces.ContainsKey(StartIndex))
+                GenerateRoot(StartIndex);
         }
 
         public void GenerateRoot(int index)
         {
+            if (index == EndIndex)
+            {
+                GameFinished();
+                return;
+            }
+
+            if (!placedPeaces.ContainsKey(index))
+            {
+                return;
+            }
+
             available.Add(index);
             var peace = placedPeaces[index];
             peace.transform.localScale = new Vector3(1f, 1f, 1f);
@@ -33,6 +49,14 @@ namespace TheWayOut.Gameplay
                 if (!available.Contains(nextIndex))
                     GenerateRoot(nextIndex);
             }
+        }
+
+        private void GameFinished()
+        {
+            OnFinished?.Invoke();
+            foreach (var objectum in placedPeaces.Values)
+                Destroy(objectum.gameObject);
+            placedPeaces.Clear();
         }
 
         public bool TryAddPeace(PuzzlePeace peace)
@@ -51,7 +75,7 @@ namespace TheWayOut.Gameplay
             var listIndexes = new List<int>();
             if (index % column != 0 && placedPeaces.ContainsKey(index - 1) && peace.IsFreeWay(0) && placedPeaces[index - 1].IsFreeWay(2))
                 listIndexes.Add(index - 1);
-            
+
 
             if (placedPeaces.ContainsKey(index - column) && peace.IsFreeWay(1) && placedPeaces[index - column].IsFreeWay(3))
                 listIndexes.Add(index - column);
