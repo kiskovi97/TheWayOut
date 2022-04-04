@@ -1,8 +1,8 @@
 {
-    "name": "ThwEayOut.Input",
+    "name": "TheWayOut.Main",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:ee1a1b2c05a4a384ab6f09dc8a6354e7"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

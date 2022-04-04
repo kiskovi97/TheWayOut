@@ -46,7 +46,14 @@ namespace TheWayOut.Gameplay
                 GenerateRoot(StartIndex);
         }
 
-        public static void GenerateRoot(int index)
+        internal static void Clear()
+        {
+            foreach (var objectum in placedPeaces.Values)
+                Destroy(objectum.gameObject);
+            placedPeaces.Clear();
+        }
+
+        private static void GenerateRoot(int index)
         {
             if (index == EndIndex)
             {
@@ -73,9 +80,6 @@ namespace TheWayOut.Gameplay
         private static void GameFinished()
         {
             OnFinished?.Invoke();
-            foreach (var objectum in placedPeaces.Values)
-                Destroy(objectum.gameObject);
-            placedPeaces.Clear();
         }
 
         public static bool TryAddPeace(PuzzlePeace peace)

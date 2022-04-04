@@ -1,4 +1,5 @@
 ﻿using System;
+using TheWayOut.Input;
 using UnityEngine;
 
 namespace TheWayOut.Gameplay
@@ -19,7 +20,7 @@ namespace TheWayOut.Gameplay
         private static void SetInstance(LevelManager levelManager)
         {
             Instance = levelManager;
-
+            Maze.Clear();
             Maze.OnFinished += Maze_OnFinished;
 
             PeaceGeneration.StartLevel(startLevel, 0);
@@ -28,7 +29,8 @@ namespace TheWayOut.Gameplay
         private static void Maze_OnFinished()
         {
             startLevel++;
-            PeaceGeneration.StartLevel(startLevel, 0);
+            SceneLoader.LoadScene(SceneLoader.GAMEOVER);
+            //PeaceGeneration.StartLevel(startLevel, 0);
         }
 
         void OnDestroy()
