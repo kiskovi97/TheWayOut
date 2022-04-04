@@ -7,6 +7,8 @@ namespace TheWayOut.Gameplay
     class Maze : MonoBehaviour
     {
         [SerializeField] private int column;
+        [SerializeField] private int startRow;
+        [SerializeField] private int endRow;
 
         private Dictionary<int, PuzzlePeace> placedPeaces = new Dictionary<int, PuzzlePeace>();
 
@@ -15,8 +17,9 @@ namespace TheWayOut.Gameplay
         public void GenerateRoot()
         {
             available = new HashSet<int>();
-            var first = placedPeaces.Keys.Min();
-            GenerateRoot(first);
+            var first = startRow * column;
+            if (placedPeaces.ContainsKey(first))
+                GenerateRoot(first);
         }
 
         public void GenerateRoot(int index)
@@ -40,7 +43,7 @@ namespace TheWayOut.Gameplay
             return true;
         }
 
-        public int[] NextIndexes(PuzzlePeace peace)
+        private int[] NextIndexes(PuzzlePeace peace)
         {
             var index = peace.Index;
             if (!placedPeaces.ContainsKey(index))
