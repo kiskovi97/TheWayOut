@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace TheWayOut.Gameplay
 {
-    public class DragPlacement : MonoBehaviour, IDropHandler
+    public class DragPlacement : MonoBehaviour, IDropHandler, IPointerDownHandler
     {
         public bool IsPlaced { get; private set; }
 
@@ -22,6 +22,17 @@ namespace TheWayOut.Gameplay
             if (!dragObject.isDragable) return;
             dragObject.SetInPlace(this);
             IsPlaced = true;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            var lastSelected = DragObject.lastSelected;
+            if (lastSelected != null)
+            {
+                lastSelected.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                OnElementDroped(lastSelected);
+                lastSelected.OnDeselect();
+            }
         }
 
         public virtual void RemoveItem()

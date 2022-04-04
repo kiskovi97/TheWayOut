@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace TheWayOut.Gameplay
 {
     [RequireComponent(typeof(RectTransform))]
     [RequireComponent(typeof(CanvasGroup))]
-    public class DragObject : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+    public class DragObject : Selectable, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         protected RectTransform rectTransform;
         private CanvasGroup canvasGroup;
@@ -14,10 +15,14 @@ namespace TheWayOut.Gameplay
         private Vector3 lastPosition;
         protected DragPlacement InPlace;
 
+        [SerializeField] private Image selectionImage;
         [NonSerialized] public bool isDragable = true;
 
-        protected virtual void Awake()
+        public static DragObject lastSelected { get; private set; }
+
+        protected override void Awake()
         {
+            base.Awake();
             rectTransform = GetComponent<RectTransform>();
             canvasGroup = GetComponent<CanvasGroup>();
             lastPosition = rectTransform.position;
@@ -26,6 +31,7 @@ namespace TheWayOut.Gameplay
         internal virtual void SetInPlace(DragPlacement placement)
         {
             InPlace = placement;
+            OnDeselect();
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -44,6 +50,12 @@ namespace TheWayOut.Gameplay
             canvasGroup.blocksRaycasts = false;
         }
 
+        internal void OnDeselect()
+        {
+            if (lastSelected == this)
+                lastSelected = null;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
             if (!isDragable) return;
@@ -59,19 +71,24 @@ namespace TheWayOut.Gameplay
                 ReturnToPosition();
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-        }
-
         internal void ReturnToPosition()
         {
             rectTransform.position = lastPosition;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (InPlace != null)
                 transform.position = InPlace.transform.position;
+            if (selectionImage != null)
+                selectionImage.enabled = lastSelected == this;
+        }
+
+        public override void OnSelect(BaseEventData eventData)
+        {
+            base.OnSelect(eventData);
+            if (InPlace == null)
+                lastSelected = this;
         }
     }
 }

@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "d1c199aa",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "d1c199aa",
+        "name": "com.kiskovi.thewayout",
+        "processId": 8217,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -25,6 +25,24 @@
             "name": "com.kiskovi.thewayout",
             "processId": 30785,
             "exited": true
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 2332,
+            "exited": true
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 7164,
+            "exited": true
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 8217,
+            "exited": false
         }
     ],
     "m_Tags": {
