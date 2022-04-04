@@ -13,57 +13,83 @@ namespace TheWayOut.Gameplay
         [SerializeField] private GameObject block;
         [SerializeField] private GameObject startBlock;
         [SerializeField] private GameObject endBlock;
-        [SerializeField] private Maze maze;
 
-        private void Start()
+        private static PeaceGeneration Instance { get; set; }
+
+        protected virtual void Awake()
         {
-            GeneratePlacements();
-
-            GenerateNew();
-            GenerateNew();
-            GenerateNew();
-
-            maze.OnFinished += Maze_OnFinished;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
         }
 
-        private void GeneratePlacements()
+        protected virtual void OnDestroy()
         {
-            foreach (Transform trans in placementsParent.transform)
-                Destroy(trans.gameObject);
-
-            for (int i = 0; i < maze.Column * maze.Column; i++)
+            if (Instance == this)
             {
-                if (i == maze.StartIndex)
+                Instance = null;
+            }
+        }
+
+        public static void StartLevel(int level, int seed)
+        {
+            if (Instance != null)
+            {
+                Instance._StartLevel(level, seed);
+            }
+        }
+
+        private void _StartLevel(int level, int seed)
+        {
+            ClearAll();
+
+            GeneratePlacements(level, seed);
+
+            GenerateNew();
+            GenerateNew();
+            GenerateNew();
+        }
+
+        private void ClearAll()
+        {
+            foreach (Transform trans in peacesSelectorParent)
+                Destroy(trans.gameObject);
+            foreach (Transform trans in placementsParent)
+                Destroy(trans.gameObject);
+        }
+
+        private void GeneratePlacements(int level, int seed)
+        {
+            Random.InitState(seed);
+            for (int i = 0; i < Maze.Column * Maze.Column; i++)
+            {
+                if (i == Maze.StartIndex)
                 {
                     Instantiate(startBlock, placementsParent);
                     continue;
                 }
 
-                if (i == maze.EndIndex)
+                if (i == Maze.EndIndex)
                 {
                     Instantiate(endBlock, placementsParent);
                     continue;
                 }
 
-                if (Random.value > 0.1f)
-                    Instantiate(placementPrefab, placementsParent);
-                else
+                if (Random.value < 0.01f * level)
                     Instantiate(block, placementsParent);
+                else
+                    Instantiate(placementPrefab, placementsParent);
             }
-        }
-
-        private void Maze_OnFinished()
-        {
-            GeneratePlacements();
         }
 
         private void OnPeacePlaced(PuzzlePeace peace, DragPlacement placement)
         {
             peace.isDragable = false;
             peace.transform.SetParent(goalParent);
-            maze.TryAddPeace(peace);
+            Maze.TryAddPeace(peace);
             peace.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
-            maze.GenerateRoot();
+            Maze.CheckPathFinding();
             GenerateNew();
         }
 

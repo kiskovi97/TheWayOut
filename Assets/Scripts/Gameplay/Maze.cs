@@ -10,24 +10,43 @@ namespace TheWayOut.Gameplay
         [SerializeField] private int startRow;
         [SerializeField] private int endRow;
 
-        public int Column => column;
-        public int StartIndex => startRow * column;
-        public int EndIndex => (endRow + 1) * column - 1;
+        private static Maze Instance { get; set; }
 
-        public event Action OnFinished;
+        public static int Column { get; private set; }
+        public static int StartIndex { get; private set; }
+        public static int EndIndex { get; private set; }
 
-        private Dictionary<int, PuzzlePeace> placedPeaces = new Dictionary<int, PuzzlePeace>();
+        public static event Action OnFinished;
 
-        private HashSet<int> available = new HashSet<int>();
+        private static Dictionary<int, PuzzlePeace> placedPeaces = new Dictionary<int, PuzzlePeace>();
 
-        public void GenerateRoot()
+        private static HashSet<int> available = new HashSet<int>();
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                Column = column;
+                StartIndex = startRow * column;
+                EndIndex = (endRow + 1) * column - 1;
+            }
+        }
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
+
+        public static void CheckPathFinding()
         {
             available = new HashSet<int>();
             if (placedPeaces.ContainsKey(StartIndex))
                 GenerateRoot(StartIndex);
         }
 
-        public void GenerateRoot(int index)
+        public static void GenerateRoot(int index)
         {
             if (index == EndIndex)
             {
@@ -51,7 +70,7 @@ namespace TheWayOut.Gameplay
             }
         }
 
-        private void GameFinished()
+        private static void GameFinished()
         {
             OnFinished?.Invoke();
             foreach (var objectum in placedPeaces.Values)
@@ -59,7 +78,7 @@ namespace TheWayOut.Gameplay
             placedPeaces.Clear();
         }
 
-        public bool TryAddPeace(PuzzlePeace peace)
+        public static bool TryAddPeace(PuzzlePeace peace)
         {
             if (placedPeaces.ContainsKey(peace.Index))
                 return false;
@@ -67,24 +86,24 @@ namespace TheWayOut.Gameplay
             return true;
         }
 
-        private int[] NextIndexes(PuzzlePeace peace)
+        private static int[] NextIndexes(PuzzlePeace peace)
         {
             var index = peace.Index;
             if (!placedPeaces.ContainsKey(index))
                 return new int[0];
             var listIndexes = new List<int>();
-            if (index % column != 0 && placedPeaces.ContainsKey(index - 1) && peace.IsFreeWay(0) && placedPeaces[index - 1].IsFreeWay(2))
+            if (index % Column != 0 && placedPeaces.ContainsKey(index - 1) && peace.IsFreeWay(0) && placedPeaces[index - 1].IsFreeWay(2))
                 listIndexes.Add(index - 1);
 
 
-            if (placedPeaces.ContainsKey(index - column) && peace.IsFreeWay(1) && placedPeaces[index - column].IsFreeWay(3))
-                listIndexes.Add(index - column);
+            if (placedPeaces.ContainsKey(index - Column) && peace.IsFreeWay(1) && placedPeaces[index - Column].IsFreeWay(3))
+                listIndexes.Add(index - Column);
 
-            if (index % column != column - 1 && placedPeaces.ContainsKey(index + 1) && peace.IsFreeWay(2) && placedPeaces[index + 1].IsFreeWay(0))
+            if (index % Column != Column - 1 && placedPeaces.ContainsKey(index + 1) && peace.IsFreeWay(2) && placedPeaces[index + 1].IsFreeWay(0))
                 listIndexes.Add(index + 1);
 
-            if (placedPeaces.ContainsKey(index + column) && peace.IsFreeWay(3) && placedPeaces[index + column].IsFreeWay(1))
-                listIndexes.Add(index + column);
+            if (placedPeaces.ContainsKey(index + Column) && peace.IsFreeWay(3) && placedPeaces[index + Column].IsFreeWay(1))
+                listIndexes.Add(index + Column);
 
             return listIndexes.ToArray();
         }
