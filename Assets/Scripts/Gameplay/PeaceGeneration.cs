@@ -31,6 +31,8 @@ namespace TheWayOut.Gameplay
             //if (peace.IsFreeWay(3))
             //    Debug.LogWarning("down");
             maze.TryAddPeace(peace);
+
+            peace.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
             GenerateNew();
         }
 
