@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 456705650842195983, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
       propertyPath: m_Name
-      value: Placement (24)
+      value: Placement Start
       objectReference: {fileID: 0}
     - target: {fileID: 3250815529110708204, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
       propertyPath: m_Pivot.x
@@ -41,11 +41,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3250815529110708204, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3250815529110708204, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3250815529110708204, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
       propertyPath: m_LocalPosition.x
