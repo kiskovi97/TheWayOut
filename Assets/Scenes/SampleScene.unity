@@ -3912,7 +3912,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   peacesPrefabs:
+  - {fileID: 6194115916012010572, guid: 7dd20888c93a02b4ca48dfa82825a004, type: 3}
   - {fileID: 6194115916012010572, guid: 88d4d60560ce5b248a4360eef0d740c1, type: 3}
+  - {fileID: 6194115916012010572, guid: 6bf597bbb791c7d40b96c0d8e6c4320f, type: 3}
+  - {fileID: 6194115916012010572, guid: 7bfb0fb3d7b8d1a4aa4266cf1dd99945, type: 3}
+  - {fileID: 6194115916012010572, guid: 175142b9750c4004d8548cbf9052b286, type: 3}
   placementParent: {fileID: 1827590162}
   goalParent: {fileID: 1432516271}
 --- !u!1001 &1176194946

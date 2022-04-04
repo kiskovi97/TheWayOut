@@ -21,6 +21,14 @@ namespace TheWayOut.Gameplay
         {
             peace.isDragable = false;
             peace.transform.SetParent(goalParent);
+            //if (peace.IsFreeWay(0))
+            //    Debug.LogWarning("left");
+            //if (peace.IsFreeWay(1))
+            //    Debug.LogWarning("up");
+            //if (peace.IsFreeWay(2))
+            //    Debug.LogWarning("right");
+            //if (peace.IsFreeWay(3))
+            //    Debug.LogWarning("down");
             GenerateNew();
         }
 
