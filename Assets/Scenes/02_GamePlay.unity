@@ -4504,7 +4504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.078431375, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.9056604, g: 0.8043893, b: 0.508366, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7735,6 +7735,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4572081558219762441, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5592587505557014482, guid: 04c1876e374a6f44fadca9712b49b796, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
 --- !u!224 &7039741152739755033 stripped

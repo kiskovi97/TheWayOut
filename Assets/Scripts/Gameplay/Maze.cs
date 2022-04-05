@@ -49,7 +49,8 @@ namespace TheWayOut.Gameplay
         internal static void Clear()
         {
             foreach (var objectum in placedPeaces.Values)
-                Destroy(objectum.gameObject);
+                if (objectum != null)
+                    Destroy(objectum.gameObject);
             placedPeaces.Clear();
         }
 
