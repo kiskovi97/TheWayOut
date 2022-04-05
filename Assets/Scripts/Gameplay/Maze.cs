@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace TheWayOut.Gameplay
         [SerializeField] private int column;
         [SerializeField] private int startRow;
         [SerializeField] private int endRow;
+        [SerializeField] private Character character;
 
         private static Maze Instance { get; set; }
 
@@ -21,6 +23,8 @@ namespace TheWayOut.Gameplay
         private static Dictionary<int, PuzzlePeace> placedPeaces = new Dictionary<int, PuzzlePeace>();
 
         private static HashSet<int> available = new HashSet<int>();
+
+        private static Stack<Vector3> tempPosition = new Stack<Vector3>();
 
         private void Awake()
         {
@@ -41,7 +45,8 @@ namespace TheWayOut.Gameplay
 
         public static void CheckPathFinding()
         {
-            available = new HashSet<int>();
+            available.Clear();
+            tempPosition.Clear();
             if (placedPeaces.ContainsKey(StartIndex))
                 GenerateRoot(StartIndex);
         }
@@ -58,6 +63,9 @@ namespace TheWayOut.Gameplay
         {
             if (index == EndIndex)
             {
+                var peaceEnd = placedPeaces[index];
+                peaceEnd.transform.localScale = new Vector3(1f, 1f, 1f);
+                tempPosition.Push(peaceEnd.transform.position);
                 GameFinished();
                 return;
             }
@@ -69,25 +77,51 @@ namespace TheWayOut.Gameplay
 
             available.Add(index);
             var peace = placedPeaces[index];
+            tempPosition.Push(peace.transform.position);
+
             peace.transform.localScale = new Vector3(1f, 1f, 1f);
             var next = NextIndexes(peace);
             foreach (var nextIndex in next)
             {
                 if (!available.Contains(nextIndex))
+                {
                     GenerateRoot(nextIndex);
+                    tempPosition.Pop();
+                }
             }
         }
 
         private static void GameFinished()
         {
-            OnFinished?.Invoke();
+            if (Instance == null || Instance.character == null)
+            {
+                OnFinished?.Invoke();
+                return;
+            }
+            Instance.character.gameObject.SetActive(true);
+            Instance.character.StartGoing(tempPosition.Reverse().ToArray());
+            Instance.character.OnFinished += OnFinished;
         }
 
         public static bool TryAddPeace(PuzzlePeace peace)
         {
+            var available = IsAvailable(peace);
+            if (available)
+                placedPeaces.Add(peace.Index, peace);
+            return available;
+        }
+
+        private static bool IsAvailable(PuzzlePeace peace)
+        {
             if (placedPeaces.ContainsKey(peace.Index))
                 return false;
-            placedPeaces.Add(peace.Index, peace);
+
+            if (peace.Index == StartIndex)
+                return peace.IsFreeWay(0);
+            
+            if (peace.Index == EndIndex)
+                return peace.IsFreeWay(2);
+
             return true;
         }
 

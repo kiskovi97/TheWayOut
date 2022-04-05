@@ -85,12 +85,17 @@ namespace TheWayOut.Gameplay
 
         private void OnPeacePlaced(PuzzlePeace peace, DragPlacement placement)
         {
-            peace.isDragable = false;
-            peace.transform.SetParent(goalParent);
-            Maze.TryAddPeace(peace);
-            peace.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
-            Maze.CheckPathFinding();
-            GenerateNew();
+            if (Maze.TryAddPeace(peace))
+            {
+                peace.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
+                peace.transform.SetParent(goalParent);
+                peace.isDragable = false;
+                Maze.CheckPathFinding();
+                GenerateNew();
+            } else
+            {
+                peace.ReturnToPosition();
+            }
         }
 
         private void GenerateNew()

@@ -73,6 +73,9 @@ namespace TheWayOut.Gameplay
 
         internal void ReturnToPosition()
         {
+            if (InPlace != null)
+                InPlace.RemoveItem();
+            InPlace = null;
             rectTransform.position = lastPosition;
         }
 

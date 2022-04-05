@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using TheWayOut.Input;
+﻿using TheWayOut.Input;
 using UnityEngine;
 
 namespace TheWayOut.Main
@@ -10,6 +8,11 @@ namespace TheWayOut.Main
         public void ReStart()
         {
             SceneLoader.LoadScene(SceneLoader.GAMEPLAY, withAd: true);
+        }
+
+        public void GoToMenu()
+        {
+            SceneLoader.LoadScene(SceneLoader.MENU);
         }
     }
 }

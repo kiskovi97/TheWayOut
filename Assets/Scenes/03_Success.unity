@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8237077128218486821, guid: 46a587c315eac144296dec98944788a2, type: 3}
       propertyPath: m_Text
-      value: Try again
+      value: Next Level
       objectReference: {fileID: 0}
     - target: {fileID: 8237077128533783285, guid: 46a587c315eac144296dec98944788a2, type: 3}
       propertyPath: m_Name
@@ -684,7 +684,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Game Over
+  m_Text: Success
 --- !u!222 &951827699
 CanvasRenderer:
   m_ObjectHideFlags: 0

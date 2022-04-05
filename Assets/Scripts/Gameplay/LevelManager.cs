@@ -7,8 +7,7 @@ namespace TheWayOut.Gameplay
     class LevelManager : MonoBehaviour
     {
         private static LevelManager Instance;
-        private static int startLevel = 0;
-        public static int CurrentLevel => startLevel;
+        public static int CurrentLevel { get; set; } = -1;
         public static int MaxLevel => PlayerPrefs.GetInt(nameof(MaxLevel), 0);
 
         void Awake()
@@ -21,20 +20,22 @@ namespace TheWayOut.Gameplay
 
         private static void SetInstance(LevelManager levelManager)
         {
-            startLevel = MaxLevel;
+            //CurrentLevel = MaxLevel;
+            if (CurrentLevel < 0)
+                CurrentLevel = MaxLevel;
             Instance = levelManager;
             Maze.Clear();
             Maze.OnFinished += Maze_OnFinished;
 
-            PeaceGeneration.StartLevel(startLevel, 0);
+            PeaceGeneration.StartLevel(CurrentLevel, 0);
         }
 
         private static void Maze_OnFinished()
         {
-            startLevel++;
-            if (startLevel > MaxLevel)
+            CurrentLevel++;
+            if (CurrentLevel > MaxLevel)
             {
-                PlayerPrefs.SetInt(nameof(MaxLevel), startLevel);
+                PlayerPrefs.SetInt(nameof(MaxLevel), CurrentLevel);
                 PlayerPrefs.Save();
             }    
             SceneLoader.LoadScene(SceneLoader.GAMEOVER);
