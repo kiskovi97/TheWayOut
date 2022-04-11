@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,9 +13,10 @@ namespace TheWayOut.Gameplay
         [SerializeField] private Transform placementsParent;
         [SerializeField] private DragPlacement placementPrefab;
         [SerializeField] private GameObject block;
-        [SerializeField] private GameObject startBlock;
-        [SerializeField] private GameObject endBlock;
+        [SerializeField] private DragPlacement startBlock;
+        [SerializeField] private DragPlacement endBlock;
 
+        private static List<DragPlacement> placements = new List<DragPlacement>();
         private static PeaceGeneration Instance { get; set; }
 
         protected virtual void Awake()
@@ -41,6 +43,16 @@ namespace TheWayOut.Gameplay
             }
         }
 
+        public static void ClearLevel()
+        {
+            foreach(var placement in placements)
+            {
+                placement.RemoveItem();
+            }
+            placements.Clear();
+            Maze.Clear();
+        }
+
         private void _StartLevel(int level, int seed)
         {
             ClearAll();
@@ -58,6 +70,7 @@ namespace TheWayOut.Gameplay
                 Destroy(trans.gameObject);
             foreach (Transform trans in placementsParent)
                 Destroy(trans.gameObject);
+            placements.Clear();
         }
 
         private void GeneratePlacements(int level, int seed)
@@ -97,20 +110,20 @@ namespace TheWayOut.Gameplay
             {
                 if (i == Maze.StartIndex)
                 {
-                    Instantiate(startBlock, placementsParent);
+                    placements.Add(Instantiate(startBlock, placementsParent));
                     continue;
                 }
 
                 if (i == Maze.EndIndex)
                 {
-                    Instantiate(endBlock, placementsParent);
+                    placements.Add(Instantiate(endBlock, placementsParent));
                     continue;
                 }
 
                 if (matrix[i] == 1)
                     Instantiate(block, placementsParent);
                 else
-                    Instantiate(placementPrefab, placementsParent);
+                    placements.Add(Instantiate(placementPrefab, placementsParent));
             }
         }
 
@@ -167,6 +180,16 @@ namespace TheWayOut.Gameplay
             var instanitated = Instantiate(selected, peacesSelectorParent);
             instanitated.transform.rotation = Quaternion.AngleAxis(90 * Mathf.RoundToInt(Random.value * 4), Vector3.forward);
             instanitated.OnPeacePlaced += OnPeacePlaced;
+        }
+
+        public static void ClearCurrentPeaces()
+        {
+            if (Instance == null) return;
+            foreach (Transform trans in Instance.peacesSelectorParent)
+                Destroy(trans.gameObject);
+            Instance.GenerateNew();
+            Instance.GenerateNew();
+            Instance.GenerateNew();
         }
     }
 }

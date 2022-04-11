@@ -2,7 +2,8 @@
     "name": "TheWayOut.Gameplay",
     "rootNamespace": "",
     "references": [
-        "GUID:ee1a1b2c05a4a384ab6f09dc8a6354e7"
+        "GUID:ee1a1b2c05a4a384ab6f09dc8a6354e7",
+        "GUID:6473bcfd4ace57949a1a2a8fe59490f9"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

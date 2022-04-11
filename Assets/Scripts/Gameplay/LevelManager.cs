@@ -30,6 +30,11 @@ namespace TheWayOut.Gameplay
             PeaceGeneration.StartLevel(CurrentLevel, 0);
         }
 
+        public static void Restart()
+        {
+            PeaceGeneration.StartLevel(CurrentLevel, 0);
+        }
+
         private static void Maze_OnFinished()
         {
             CurrentLevel++;
@@ -39,6 +44,7 @@ namespace TheWayOut.Gameplay
                 PlayerPrefs.Save();
             }    
             SceneLoader.LoadScene(SceneLoader.GAMEOVER);
+            ClearAllButton.StaticSpecialOne += 1;
             //PeaceGeneration.StartLevel(startLevel, 0);
         }
 
