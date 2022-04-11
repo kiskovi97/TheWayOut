@@ -116,11 +116,11 @@ namespace TheWayOut.Gameplay
             if (placedPeaces.ContainsKey(peace.Index))
                 return false;
 
-            if (peace.Index == StartIndex)
-                return peace.IsFreeWay(0);
+            if (peace.Index == StartIndex && !peace.IsFreeWay(0))
+                return false;
             
-            if (peace.Index == EndIndex)
-                return peace.IsFreeWay(2);
+            if (peace.Index == EndIndex && !peace.IsFreeWay(2))
+                return false;
 
             return true;
         }

@@ -21,6 +21,7 @@ namespace TheWayOut.Gameplay
 
         internal bool IsFreeWay(int index)
         {
+            index = (int)Mathf.Repeat(index, freeWay.Length);
             var rotation = transform.rotation.eulerAngles.z / 90;
 
             if (index >= freeWay.Length)

@@ -1,4 +1,5 @@
 
+using System.Linq;
 using UnityEngine;
 
 namespace TheWayOut.Gameplay
@@ -61,7 +62,37 @@ namespace TheWayOut.Gameplay
 
         private void GeneratePlacements(int level, int seed)
         {
-            Random.InitState(seed);
+            Random.InitState(seed + level);
+            var matrix = new int[Maze.Column * Maze.Column];
+            var list = Enumerable.Range(0, Maze.Column * Maze.Column).ToList();
+            list = list.OrderBy(item => Random.value).ToList();
+            for (int i = 0; i < Maze.Column * Maze.Column; i++)
+            {
+                var index = list[i];
+                if (index == Maze.StartIndex)
+                {
+                    matrix[index] = 0;
+                    continue;
+                }
+
+                if (index == Maze.EndIndex)
+                {
+                    matrix[index] = 0;
+                    continue;
+                }
+
+                if (Random.value < 0.01f * level)
+                {
+                    matrix[index] = 1;
+                    if (!CheckAvaiability(matrix))
+                    {
+                        matrix[index] = 0;
+                    }
+                } else
+                {
+                    matrix[index] = 0;
+                }
+            }
             for (int i = 0; i < Maze.Column * Maze.Column; i++)
             {
                 if (i == Maze.StartIndex)
@@ -76,23 +107,54 @@ namespace TheWayOut.Gameplay
                     continue;
                 }
 
-                if (Random.value < 0.01f * level)
+                if (matrix[i] == 1)
                     Instantiate(block, placementsParent);
                 else
                     Instantiate(placementPrefab, placementsParent);
             }
         }
 
+        private bool CheckAvaiability(int[] matrix)
+        {
+            var temp = new int[Maze.Column * Maze.Column];
+            temp[Maze.StartIndex] = 1;
+            var list = Enumerable.Range(0, Maze.Column * Maze.Column).ToList();
+            list.Remove(Maze.StartIndex);
+            for (int i = 0; i < Maze.Column * Maze.Column; i++)
+            {
+                foreach (var item in list)
+                {
+                    if (matrix[item] > 0) continue;
+                    var column = item % Maze.Column;
+                    var row = Mathf.FloorToInt(item / Maze.Column);
+                    if ((column > 0 && temp[item - 1] == 1)
+                        || (column < Maze.Column - 1 && temp[item + 1] == 1)
+                        || (row > 0 && temp[item - Maze.Column] == 1)
+                        || (row < Maze.Column - 1 && temp[item + Maze.Column] == 1))
+                    {
+                        temp[item] = 1;
+                        list.Remove(item);
+                        break;
+                    }
+                }
+                if (temp[Maze.EndIndex] == 1)
+                    return true;
+            }
+
+            return false;
+        }
+
         private void OnPeacePlaced(PuzzlePeace peace, DragPlacement placement)
         {
             if (Maze.TryAddPeace(peace))
             {
-                peace.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
+                peace.transform.localScale = new Vector3(1f, 1f, 1f);
                 peace.transform.SetParent(goalParent);
                 peace.isDragable = false;
                 Maze.CheckPathFinding();
                 GenerateNew();
-            } else
+            }
+            else
             {
                 peace.ReturnToPosition();
             }
