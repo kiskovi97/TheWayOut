@@ -23,8 +23,8 @@ namespace TheWayOut.Gameplay
         {
             if (obj)
             {
-                ClearAllButton.StaticSpecialOne += 10;
-                ClearMazeButton.StaticSpecialOne += 5;
+                ClearAllButton.StaticSpecialOne += 3;
+                ClearMazeButton.StaticSpecialOne += 1;
             }
         }
     }

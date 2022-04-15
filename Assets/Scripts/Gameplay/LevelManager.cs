@@ -45,7 +45,7 @@ namespace TheWayOut.Gameplay
             }    
             SceneLoader.LoadScene(SceneLoader.GAMEOVER);
             ClearAllButton.StaticSpecialOne += 1;
-            ClearMazeButton.StaticSpecialOne += 1;
+            //ClearMazeButton.StaticSpecialOne += 1;
             //PeaceGeneration.StartLevel(startLevel, 0);
         }
 
