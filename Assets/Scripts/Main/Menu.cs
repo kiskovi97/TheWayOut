@@ -10,6 +10,16 @@ namespace TheWayOut.Main
             SceneLoader.LoadScene(SceneLoader.GAMEPLAY);
         }
 
+        public void GoToMenu()
+        {
+            SceneLoader.LoadScene(SceneLoader.MENU);
+        }
+
+        public void GoToSettings()
+        {
+            SceneLoader.LoadScene(SceneLoader.SETTINGS);
+        }
+
         public void ExitGame()
         {
             SceneLoader.ExitGame();

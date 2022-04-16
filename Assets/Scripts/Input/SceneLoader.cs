@@ -13,6 +13,7 @@ namespace TheWayOut.Input
 
         private static int LOADING = 4;
         public static int ADDVERTISMENT = 5;
+        public static int SETTINGS = 6;
 
         private static int lastSceneRequested = 0;
 

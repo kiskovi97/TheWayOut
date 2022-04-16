@@ -4219,11 +4219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8237077128533783288, guid: 46a587c315eac144296dec98944788a2, type: 3}
       propertyPath: m_Color.b
-      value: 0.05098039
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8237077128533783288, guid: 46a587c315eac144296dec98944788a2, type: 3}
       propertyPath: m_Color.g
-      value: 0.9357189
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8237077128533783288, guid: 46a587c315eac144296dec98944788a2, type: 3}
       propertyPath: m_Color.r
@@ -4902,6 +4902,7 @@ GameObject:
   - component: {fileID: 1265127210}
   - component: {fileID: 1265127212}
   - component: {fileID: 1265127211}
+  - component: {fileID: 1265127213}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -4941,7 +4942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9056604, g: 0.8043893, b: 0.508366, a: 1}
+  m_Color: {r: 0.043137256, g: 0, b: 0.2, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4966,6 +4967,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265127209}
   m_CullTransparentMesh: 1
+--- !u!114 &1265127213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265127209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9647f2002199ff94f9044222916119a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteDark: {fileID: 0}
+  spriteLight: {fileID: 0}
+  colorDark: {r: 0.043137256, g: 0, b: 0.2, a: 1}
+  colorLight: {r: 0.90588236, g: 0.8039216, b: 0.50980395, a: 1}
 --- !u!1 &1268608289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4996,8 +5013,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bannerPosition: 1
-  _androidAdUnitId: Banner_Android
-  _iOSAdUnitId: Banner_iOS
 --- !u!4 &1268608291
 Transform:
   m_ObjectHideFlags: 0
@@ -5568,6 +5583,27 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3250815529110708204, guid: d7ba4c0b33c0e804f9258501c9cfe9ea, type: 3}
   m_PrefabInstance: {fileID: 1433881197}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1453671156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8237077128533783285, guid: 46a587c315eac144296dec98944788a2, type: 3}
+  m_PrefabInstance: {fileID: 1161753066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1453671157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453671156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9647f2002199ff94f9044222916119a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteDark: {fileID: -4124168217499134943, guid: 69adbd09e13cac846a94b61912fde441, type: 3}
+  spriteLight: {fileID: -4124168217499134943, guid: 69adbd09e13cac846a94b61912fde441, type: 3}
+  colorDark: {r: 1, g: 1, b: 1, a: 1}
+  colorLight: {r: 1, g: 0.9372549, b: 0.050980393, a: 1}
 --- !u!1001 &1484143032
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3250815529110708204}
   - component: {fileID: 4092058573257232929}
   - component: {fileID: 4572081558219762441}
+  - component: {fileID: 3299557043447969216}
   m_Layer: 5
   m_Name: Block
   m_TagString: Untagged
@@ -75,3 +76,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3299557043447969216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456705650842195983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9647f2002199ff94f9044222916119a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteDark: {fileID: -6718619494953364138, guid: e2f59c02d1a96b041990f2f76d894cab, type: 3}
+  spriteLight: {fileID: 5592587505557014482, guid: 04c1876e374a6f44fadca9712b49b796, type: 3}
+  colorDark: {r: 1, g: 1, b: 1, a: 1}
+  colorLight: {r: 1, g: 1, b: 1, a: 1}

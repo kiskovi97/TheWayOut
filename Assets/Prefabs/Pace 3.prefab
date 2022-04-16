@@ -15,6 +15,14 @@ PrefabInstance:
       propertyPath: freeWay.Array.data[3]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3031045383010669363, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
+      propertyPath: spriteDark
+      value: 
+      objectReference: {fileID: 7070437660284301689, guid: e2f59c02d1a96b041990f2f76d894cab, type: 3}
+    - target: {fileID: 3031045383010669363, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
+      propertyPath: spriteLight
+      value: 
+      objectReference: {fileID: -8603901134097038001, guid: 04c1876e374a6f44fadca9712b49b796, type: 3}
     - target: {fileID: 6157966074308615463, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
       propertyPath: m_Name
       value: Pace 3
