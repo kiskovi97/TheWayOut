@@ -122,6 +122,41 @@ namespace TheWayOut.Gameplay
             if (peace.Index == EndIndex && !peace.IsFreeWay(2))
                 return false;
 
+            var column = peace.Index % Column;
+            var row = Mathf.FloorToInt((float)peace.Index / Column);
+
+            var index = peace.Index - 1;
+            if (column > 0 && placedPeaces.ContainsKey(index))
+            {
+                var peace2 = placedPeaces[index];
+                if ((peace2.IsFreeWay(2) && !peace.IsFreeWay(0)) || (!peace2.IsFreeWay(2) && peace.IsFreeWay(0)))
+                    return false;
+            }
+
+            index = peace.Index - Column;
+            if (row > 0 && placedPeaces.ContainsKey(index))
+            {
+                var peace2 = placedPeaces[index];
+                if ((peace2.IsFreeWay(3) && !peace.IsFreeWay(1)) || (!peace2.IsFreeWay(3) && peace.IsFreeWay(1)))
+                    return false;
+            }
+
+            index = peace.Index + 1;
+            if (column < Column - 1 && placedPeaces.ContainsKey(index))
+            {
+                var peace2 = placedPeaces[index];
+                if ((peace2.IsFreeWay(0) && !peace.IsFreeWay(2)) || (!peace2.IsFreeWay(0) && peace.IsFreeWay(2)))
+                    return false;
+            }
+
+            index = peace.Index + Column;
+            if (row < Column - 1 && placedPeaces.ContainsKey(index))
+            {
+                var peace2 = placedPeaces[index];
+                if ((peace2.IsFreeWay(1) && !peace.IsFreeWay(3)) || (!peace2.IsFreeWay(1) && peace.IsFreeWay(3)))
+                    return false;
+            }
+
             return true;
         }
 
