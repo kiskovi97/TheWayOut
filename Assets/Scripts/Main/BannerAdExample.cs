@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using TheWayOut.Main;
 
 public class BannerAdExample : MonoBehaviour
 {
@@ -62,6 +63,7 @@ public class BannerAdExample : MonoBehaviour
     void OnBannerError(string message)
     {
         Debug.Log($"Banner Error: {message}");
+        AdsShower.LoadAd(null);
         // Optionally execute additional code, such as attempting to load another ad.
     }
 
