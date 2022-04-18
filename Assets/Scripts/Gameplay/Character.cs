@@ -8,12 +8,13 @@ namespace TheWayOut.Gameplay
         private Vector3[] positions = new Vector3[0];
         private int currentindex = 0;
 
-        public event Action OnFinished;
+        private Action OnFinished;
 
-        public void StartGoing(Vector3[] positions)
+        public void StartGoing(Vector3[] positions, Action OnFinished)
         {
             this.positions = positions;
             currentindex = 0;
+            this.OnFinished = OnFinished;
         }
 
         private void Update()
@@ -29,7 +30,10 @@ namespace TheWayOut.Gameplay
             if ((transform.position - currentPos).magnitude < 0.1f) {
                 currentindex++;
                 if (positions.Length <= currentindex)
+                {
                     OnFinished?.Invoke();
+                    OnFinished = null;
+                }
             }
         }
     }

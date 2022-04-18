@@ -99,8 +99,7 @@ namespace TheWayOut.Gameplay
                 return;
             }
             Instance.character.gameObject.SetActive(true);
-            Instance.character.StartGoing(tempPosition.Reverse().ToArray());
-            Instance.character.OnFinished += OnFinished;
+            Instance.character.StartGoing(tempPosition.Reverse().ToArray(), OnFinished);
         }
 
         public static bool TryAddPeace(PuzzlePeace peace)

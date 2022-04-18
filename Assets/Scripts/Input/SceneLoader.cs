@@ -25,6 +25,7 @@ namespace TheWayOut.Input
 
         private static void OnSceneLoaded(AsyncOperation obj)
         {
+            obj.completed -= OnSceneLoaded;
             SceneManager.LoadScene(lastSceneRequested);
         }
 

@@ -26,9 +26,11 @@ namespace TheWayOut.Gameplay
                 CurrentLevel = MaxLevel;
             Instance = levelManager;
             Maze.Clear();
-            Maze.OnFinished += Maze_OnFinished;
-
-            PeaceGeneration.StartLevel(CurrentLevel, 0);
+            if (levelManager != null)
+            {
+                Maze.OnFinished += Maze_OnFinished;
+                PeaceGeneration.StartLevel(CurrentLevel, 0);
+            }
         }
 
         public static void Restart()
