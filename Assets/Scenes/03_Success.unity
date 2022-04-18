@@ -1181,6 +1181,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1265127210}
     m_Modifications:
+    - target: {fileID: 8237077128218486821, guid: 46a587c315eac144296dec98944788a2, type: 3}
+      propertyPath: m_Text
+      value: Exit
+      objectReference: {fileID: 0}
     - target: {fileID: 8237077128533783285, guid: 46a587c315eac144296dec98944788a2, type: 3}
       propertyPath: m_Name
       value: Button (3)
