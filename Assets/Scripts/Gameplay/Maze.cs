@@ -25,6 +25,7 @@ namespace TheWayOut.Gameplay
         private static HashSet<int> available = new HashSet<int>();
 
         private static Stack<Vector3> tempPosition = new Stack<Vector3>();
+        private static List<Vector3> FinalPositions = new List<Vector3>();
 
         private void Awake()
         {
@@ -47,8 +48,15 @@ namespace TheWayOut.Gameplay
         {
             available.Clear();
             tempPosition.Clear();
+            FinalPositions.Clear();
             if (placedPeaces.ContainsKey(StartIndex))
+            {
                 GenerateRoot(StartIndex);
+                if (FinalPositions.Count > 0)
+                {
+                    GameFinished();
+                }
+            }
         }
 
         internal static void Clear()
@@ -65,8 +73,13 @@ namespace TheWayOut.Gameplay
             {
                 var peaceEnd = placedPeaces[index];
                 peaceEnd.transform.localScale = new Vector3(1f, 1f, 1f);
+
                 tempPosition.Push(peaceEnd.transform.position);
-                GameFinished();
+                if (FinalPositions.Count == 0 || FinalPositions.Count > tempPosition.Count)
+                {
+                    FinalPositions = tempPosition.ToList();
+                }
+
                 return;
             }
 
@@ -87,6 +100,7 @@ namespace TheWayOut.Gameplay
                 {
                     GenerateRoot(nextIndex);
                     tempPosition.Pop();
+                    available.Remove(nextIndex);
                 }
             }
         }
@@ -99,7 +113,7 @@ namespace TheWayOut.Gameplay
                 return;
             }
             Instance.character.gameObject.SetActive(true);
-            Instance.character.StartGoing(tempPosition.Reverse().ToArray(), OnFinished);
+            Instance.character.StartGoing(FinalPositions.ToArray().Reverse().ToArray(), OnFinished);
         }
 
         public static bool TryAddPeace(PuzzlePeace peace)
@@ -117,7 +131,7 @@ namespace TheWayOut.Gameplay
 
             if (peace.Index == StartIndex && !peace.IsFreeWay(0))
                 return false;
-            
+
             if (peace.Index == EndIndex && !peace.IsFreeWay(2))
                 return false;
 
