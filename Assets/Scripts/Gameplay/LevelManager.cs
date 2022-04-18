@@ -1,5 +1,6 @@
 ﻿using System;
 using TheWayOut.Input;
+using TheWayOut.Main;
 using UnityEngine;
 
 namespace TheWayOut.Gameplay
@@ -42,8 +43,10 @@ namespace TheWayOut.Gameplay
             {
                 PlayerPrefs.SetInt(nameof(MaxLevel), CurrentLevel);
                 PlayerPrefs.Save();
-            }    
-            SceneLoader.LoadScene(SceneLoader.GAMEOVER);
+            }
+
+
+            AdsShower.LoadAd((_) => SceneLoader.LoadScene(SceneLoader.GAMEOVER));
             ClearAllButton.StaticSpecialOne += 1;
             //ClearMazeButton.StaticSpecialOne += 1;
             //PeaceGeneration.StartLevel(startLevel, 0);

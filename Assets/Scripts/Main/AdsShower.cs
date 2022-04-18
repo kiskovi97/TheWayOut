@@ -9,8 +9,22 @@ namespace TheWayOut.Main
     {
         [SerializeField] string _androidAdUnitId = "Interstitial_Android";
         [SerializeField] string _iOsAdUnitId = "Interstitial_iOS";
+        [SerializeField] string _androidAdUnitIdSpecial = "Rewarded_Android";
+        [SerializeField] string _iOsAdUnitIdSpecial = "Rewarded_iOS";
         string _adUnitId;
+        string _adUnitBigId;
         private static List<Action<bool>> OnFinishedListeners = new List<Action<bool>>();
+
+        public static void LoadAdSpecial(Action<bool> OnFinished)
+        {
+            if (Instance != null)
+            {
+                if (OnFinished != null)
+                    OnFinishedListeners.Add(OnFinished);
+                Instance.LoadSpecialAdd();
+            }
+        }
+
         private static AdsShower Instance { get; set; }
 
         void Awake()
@@ -23,6 +37,9 @@ namespace TheWayOut.Main
                 _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
                     ? _iOsAdUnitId
                     : _androidAdUnitId;
+                _adUnitBigId = (Application.platform == RuntimePlatform.IPhonePlayer)
+                    ? _iOsAdUnitIdSpecial
+                    : _androidAdUnitIdSpecial;
             }
             else
             {
@@ -51,9 +68,14 @@ namespace TheWayOut.Main
         // Load content to the Ad Unit:
         public void LoadAd()
         {
-            // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
             Debug.Log("Loading Ad: " + _adUnitId);
             Advertisement.Load(_adUnitId, this);
+        }
+
+        private void LoadSpecialAdd()
+        {
+            Debug.Log("Loading Ad: " + _adUnitBigId);
+            Advertisement.Load(_adUnitBigId, this);
         }
 
         // Show the loaded content in the Ad Unit:

@@ -49,6 +49,9 @@ public class BannerAdExample : MonoBehaviour
 
             // Load the Ad Unit with banner content:
             Advertisement.Banner.Load(_adUnitId, options);
+        } else
+        {
+            ShowBannerAd();
         }
     }
 
@@ -63,7 +66,6 @@ public class BannerAdExample : MonoBehaviour
     void OnBannerError(string message)
     {
         Debug.Log($"Banner Error: {message}");
-        AdsShower.LoadAd(null);
         // Optionally execute additional code, such as attempting to load another ad.
     }
 
@@ -96,6 +98,6 @@ public class BannerAdExample : MonoBehaviour
     void OnDestroy()
     {
         // Clean up the listeners:
-        HideBannerAd();
+        Advertisement.Banner.Hide(true);
     }
 }

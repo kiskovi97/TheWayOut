@@ -7,7 +7,7 @@ namespace TheWayOut.Main
     {
         public void ReStart()
         {
-            SceneLoader.LoadScene(SceneLoader.GAMEPLAY, withAd: true);
+            AdsShower.LoadAd((_) => SceneLoader.LoadScene(SceneLoader.GAMEPLAY));
         }
 
         public void GoToMenu()

@@ -17,13 +17,10 @@ namespace TheWayOut.Input
 
         private static int lastSceneRequested = 0;
 
-        public static void LoadScene(int index, bool withAd = false)
+        public static void LoadScene(int index)
         {
             lastSceneRequested = index;
-            if (withAd)
-                SceneManager.LoadScene(ADDVERTISMENT);
-            else
-                SceneManager.LoadSceneAsync(LOADING).completed += OnSceneLoaded;
+            SceneManager.LoadSceneAsync(LOADING).completed += OnSceneLoaded;
         }
 
         private static void OnSceneLoaded(AsyncOperation obj)
