@@ -29,6 +29,7 @@ namespace TheWayOut.Gameplay
             var lastSelected = DragObject.lastSelected;
             if (lastSelected != null)
             {
+                lastSelected.SetLastPosition();
                 lastSelected.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
                 OnElementDroped(lastSelected);
                 lastSelected.OnDeselect();

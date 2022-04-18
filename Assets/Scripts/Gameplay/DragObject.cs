@@ -12,7 +12,7 @@ namespace TheWayOut.Gameplay
         protected RectTransform rectTransform;
         private CanvasGroup canvasGroup;
 
-        private Vector3 lastPosition;
+        protected Vector3 lastPosition;
         protected DragPlacement InPlace;
 
         [SerializeField] private Image selectionImage;
@@ -32,6 +32,11 @@ namespace TheWayOut.Gameplay
         {
             InPlace = placement;
             OnDeselect();
+        }
+
+        internal void SetLastPosition()
+        {
+            lastPosition = rectTransform.position;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
