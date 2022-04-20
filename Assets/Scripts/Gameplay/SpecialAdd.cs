@@ -16,7 +16,7 @@ namespace TheWayOut.Gameplay
 
         private void ButtonClicked()
         {
-            AdsShower.LoadAdSpecial(OnFinished);
+            AdsInitializer.LoadAd(OnFinished);
         }
 
         private void OnFinished(bool obj)
