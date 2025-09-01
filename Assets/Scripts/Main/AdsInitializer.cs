@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+
+using Unity.Services.LevelPlay;
+
 using UnityEngine;
-using GoogleMobileAds.Api;
 
 namespace TheWayOut.Main
 {
     public class AdsInitializer : MonoBehaviour
     {
-        private BannerView bannerView;
-        private RewardedAd rewardedAd;
+        private string appKey = "236d1b92d";
+        private string bannerAdUnitId = "288q8dhrrf53nco4";
+        private string interstitialAdUnitId = "yu1fp9fiawfzghhk";
+        private string rewardedAdUnitId = "f9beqgt4ygv0p3qx";
+        private LevelPlayBannerAd bannerAd;
+        private LevelPlayInterstitialAd interstitialAd;
+        private LevelPlayRewardedAd rewardedAd;
+        private static TaskCompletionSource<bool> rewardTaskSource;
 
         private static AdsInitializer Instance { get; set; }
 
@@ -31,143 +38,124 @@ namespace TheWayOut.Main
             if (Instance == this)
             {
                 Instance = null;
-                if (bannerView != null)
-                    bannerView.Destroy();
             }
         }
 
         public void InitializeAds()
         {
-            MobileAds.Initialize(OnInitializationComplete);
-        }
+            LevelPlay.OnInitSuccess += SdkInitializationCompletedEvent;
+            LevelPlay.OnInitFailed += SdkInitializationFailedEvent;
 
-        private void OnInitializationComplete(InitializationStatus obj)
-        {
-            Debug.Log("Unity Ads initialization complete.");
-            this.RequestBanner();
-        }
-
-        private void RequestBanner()
-        {
-#if UNITY_ANDROID
-            string adUnitId = "ca-app-pub-5964647989848848/9613823452";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-5964647989848848/9613823452";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
-
-#if !UNITY_EDITOR
-            // Create a 320x50 banner at the top of the screen.
-            this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Top);
-            // Called when an ad request has successfully loaded.
-            this.bannerView.OnAdLoaded += this.HandleOnAdLoaded;
-            // Called when an ad request failed to load.
-            this.bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
-            // Called when an ad is clicked.
-            this.bannerView.OnAdOpening += this.HandleOnAdOpened;
-            // Called when the user returned from the app after an ad click.
-            this.bannerView.OnAdClosed += this.HandleOnAdClosed;
-
-
-            AdRequest request = new AdRequest.Builder().Build();
-
-            // Load the banner with the request.
-            this.bannerView.LoadAd(request);
-#endif
-
-        }
-
-        public void HandleOnAdLoaded(object sender, EventArgs args)
-        {
-            MonoBehaviour.print("HandleAdLoaded event received");
-        }
-
-        public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
-        {
-            MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
-                                + args.LoadAdError);
-        }
-
-        public void HandleOnAdOpened(object sender, EventArgs args)
-        {
-            MonoBehaviour.print("HandleAdOpened event received");
-        }
-
-        public void HandleOnAdClosed(object sender, EventArgs args)
-        {
-            MonoBehaviour.print("HandleAdClosed event received");
-        }
-
-        public static void LoadAd(Action<bool> onFinshed)
-        {
-            Instance._LoadAdd(onFinshed);
-        }
-
-        private List<Action<bool>> onFinished = new List<Action<bool>>();
-
-        private void _LoadAdd(Action<bool> onFinished)
-        {
-            this.onFinished.Add(onFinished);
-#if UNITY_ANDROID
-            string adUnitId = "ca-app-pub-5964647989848848/7971786332";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-5964647989848848/7971786332";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
-
-
-#if !UNITY_EDITOR
-            this.rewardedAd = new RewardedAd(adUnitId);
-
-            // Called when an ad request failed to load.
-            this.rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
-            // Called when an ad request failed to show.
-            this.rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
-            // Called when the user should be rewarded for interacting with the ad.
-            this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-            // Called when the ad is closed.
-            this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
-
-            // Create an empty ad request.
-            AdRequest request = new AdRequest.Builder().Build();
-            // Load the rewarded ad with the request.
-            this.rewardedAd.LoadAd(request);
-#else
-            SendOneTimemessage(true);
-#endif
-        }
-
-        private void HandleRewardedAdClosed(object sender, EventArgs e)
-        {
-            SendOneTimemessage(false);
-        }
-
-        private void HandleUserEarnedReward(object sender, Reward e)
-        {
-            SendOneTimemessage(true);
-        }
-
-        private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
-        {
-            Debug.LogWarning("HandleRewardedAdFailedToShow: " + e.AdError);
-            SendOneTimemessage(false);
-        }
-
-        private void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs e)
-        {
-            Debug.LogWarning("HandleRewardedAdFailedToLoad: " + e.LoadAdError);
-            SendOneTimemessage(false);
-        }
-
-        private void SendOneTimemessage(bool value)
-        {
-            foreach(var action in onFinished)
+            Debug.Log("---------- ValidateIntegration ------------");
+            if (Debug.isDebugBuild)
             {
-                action?.Invoke(value);
+                LevelPlay.SetMetaData("is_test_suite", "enable");
             }
-            onFinished.Clear();
+            LevelPlay.ValidateIntegration();
+            Debug.Log("---------- ValidateIntegration End ------------");
+            LevelPlay.Init(appKey);
+        }
+
+        public static Task<bool> LoadRewardAd()
+        {
+            rewardTaskSource = new TaskCompletionSource<bool>();
+
+            Instance.rewardedAd.LoadAd();
+
+            return rewardTaskSource.Task;
+        }
+
+        private static void RewardedAd_OnAdClosed(com.unity3d.mediation.LevelPlayAdInfo obj)
+        {
+            if (!rewardTaskSource.Task.IsCompleted)
+            {
+                Debug.Log("Ad closed without reward.");
+                rewardTaskSource?.TrySetResult(false);
+            }
+        }
+
+
+        private static void RewardedAd_OnAdRewarded(com.unity3d.mediation.LevelPlayAdInfo arg1, com.unity3d.mediation.LevelPlayReward arg2)
+        {
+            rewardTaskSource?.TrySetResult(true);
+        }
+
+        private void SdkInitializationFailedEvent(com.unity3d.mediation.LevelPlayInitError error)
+        {
+            Debug.LogError("SdkInitializationFailedEvent");
+        }
+
+        private void SdkInitializationCompletedEvent(com.unity3d.mediation.LevelPlayConfiguration configuration)
+        {
+            Debug.Log("SdkInitializationCompletedEvent");
+
+            if (Debug.isDebugBuild)
+            {
+                LevelPlay.LaunchTestSuite();
+            }
+
+            var config = new LevelPlayBannerAd.Config.Builder()
+                .SetPosition(com.unity3d.mediation.LevelPlayBannerPosition.TopCenter)
+                .SetSize(com.unity3d.mediation.LevelPlayAdSize.BANNER);
+
+            bannerAd = new LevelPlayBannerAd(bannerAdUnitId, config.Build());
+
+            bannerAd.OnAdLoaded += BannerAd_OnAdLoaded;
+            bannerAd.OnAdLoadFailed += BannerAd_OnAdLoadFailed;
+
+            bannerAd.LoadAd();
+
+            interstitialAd = new LevelPlayInterstitialAd(interstitialAdUnitId);
+
+            interstitialAd.OnAdLoaded += InterstitialAd_OnAdLoaded;
+            interstitialAd.OnAdLoadFailed += InterstitialAd_OnAdLoadFailed;
+
+            rewardedAd = new LevelPlayRewardedAd(rewardedAdUnitId);
+
+            rewardedAd.OnAdLoaded += RewardedAd_OnAdLoaded;
+            rewardedAd.OnAdLoadFailed += RewardedAd_OnAdLoadFailed;
+            rewardedAd.OnAdRewarded += RewardedAd_OnAdRewarded;
+            rewardedAd.OnAdClosed += RewardedAd_OnAdClosed;
+        }
+
+        private void RewardedAd_OnAdLoadFailed(com.unity3d.mediation.LevelPlayAdError obj)
+        {
+            Debug.LogError("RewardedAd_OnAdLoadFailed: " + obj.ErrorMessage);
+            rewardTaskSource?.TrySetResult(false);
+        }
+        private void InterstitialAd_OnAdLoadFailed(com.unity3d.mediation.LevelPlayAdError obj)
+        {
+            Debug.LogError("InterstitialAd_OnAdLoadFailed: " + obj.ErrorMessage);
+        }
+
+        private void BannerAd_OnAdLoadFailed(com.unity3d.mediation.LevelPlayAdError obj)
+        {
+            Debug.LogError("BannerAd_OnAdLoadFailed: " + obj.ErrorMessage);
+            Invoke(nameof(ReloadBanner), 10f);
+        }
+
+        private void RewardedAd_OnAdLoaded(com.unity3d.mediation.LevelPlayAdInfo obj)
+        {
+            rewardedAd.ShowAd();
+            Debug.Log("RewardedAd_OnAdLoaded");
+        }
+
+        private void InterstitialAd_OnAdLoaded(com.unity3d.mediation.LevelPlayAdInfo obj)
+        {
+            interstitialAd.ShowAd();
+            Debug.Log("InterstitialAd_OnAdLoaded");
+        }
+
+        private void BannerAd_OnAdLoaded(com.unity3d.mediation.LevelPlayAdInfo obj)
+        {
+            Debug.Log("BannerAd_OnAdLoaded");
+            bannerAd.ShowAd();
+        }
+
+        private void ReloadBanner()
+        {
+            if (bannerAd != null)
+                bannerAd.LoadAd();
         }
     }
 }

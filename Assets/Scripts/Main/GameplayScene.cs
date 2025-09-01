@@ -5,9 +5,10 @@ namespace TheWayOut.Main
 {
     class GameplayScene : MonoBehaviour
     {
-        public void ReStart()
+        public async void ReStart()
         {
-            AdsInitializer.LoadAd((_) => SceneLoader.LoadScene(SceneLoader.GAMEPLAY));
+            var success = await AdsInitializer.LoadRewardAd();
+            SceneLoader.LoadScene(SceneLoader.GAMEPLAY);
         }
 
         public void GoToMenu()

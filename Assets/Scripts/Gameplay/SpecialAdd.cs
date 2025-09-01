@@ -14,14 +14,10 @@ namespace TheWayOut.Gameplay
             button.onClick.AddListener(ButtonClicked);
         }
 
-        private void ButtonClicked()
+        private async void ButtonClicked()
         {
-            AdsInitializer.LoadAd(OnFinished);
-        }
-
-        private void OnFinished(bool obj)
-        {
-            if (obj)
+            var success = await AdsInitializer.LoadRewardAd();
+            if (success)
             {
                 ClearAllButton.StaticSpecialOne += 3;
                 ClearMazeButton.StaticSpecialOne += 1;
