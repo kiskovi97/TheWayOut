@@ -67,6 +67,7 @@ namespace TheWayOut.Gameplay
                 if (peace.puzzlePeace == null || peace.puzzlePeace.IsInPlace)
                 {
                     peace.puzzlePeace = selected;
+                    peace.rotation = Random.Range(0, 3) * 90;
                     break;
                 }
             }
