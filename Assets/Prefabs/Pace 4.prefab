@@ -5,18 +5,19 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2560871186453226373, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
-      propertyPath: freeWay.Array.data[0]
+      propertyPath: 'freeWay.Array.data[0]'
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2560871186453226373, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
-      propertyPath: freeWay.Array.data[2]
+      propertyPath: 'freeWay.Array.data[2]'
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2560871186453226373, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
-      propertyPath: freeWay.Array.data[3]
+      propertyPath: 'freeWay.Array.data[3]'
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3031045383010669363, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
@@ -118,7 +119,10 @@ PrefabInstance:
     - target: {fileID: 6157966074308615467, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3964068949423675252, guid: 04c1876e374a6f44fadca9712b49b796, type: 3}
+      objectReference: {fileID: 21300000, guid: 5d14ac92c350c834da175d54374e214d, type: 3}
     m_RemovedComponents:
     - {fileID: 6157966074308615465, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee5a343ac8bff5446b0e4f27517ee858, type: 3}

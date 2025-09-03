@@ -4,7 +4,7 @@ using Unity.Services.LevelPlay;
 
 using UnityEngine;
 
-namespace TheWayOut.Main
+namespace TheWayOut.Core
 {
     public class AdsInitializer : MonoBehaviour
     {

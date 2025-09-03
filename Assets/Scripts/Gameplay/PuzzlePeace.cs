@@ -2,21 +2,30 @@
 using System;
 using UnityEngine;
 
+using Zenject;
+
 namespace TheWayOut.Gameplay
 {
-    class PuzzlePeace : DragObject
+    public class PeacePlacedSignal
     {
-        internal Action<PuzzlePeace, DragPlacement> OnPeacePlaced;
-
+        public DragPlacement placement;
+        public PuzzlePeace peace;
+    }
+    public class PuzzlePeace : DragObject
+    {
         [SerializeField] private bool[] freeWay;
 
+        [Inject] private SignalBus signalBus;
+
         internal int Index => InPlace.transform.GetSiblingIndex();
+
+        public bool IsInPlace => InPlace != null;
 
         internal override void SetInPlace(DragPlacement placement)
         {
             base.SetInPlace(placement);
             if (placement != null)
-                OnPeacePlaced?.Invoke(this, placement);
+                signalBus.Fire(new PeacePlacedSignal() { placement = placement, peace = this });
         }
 
         internal bool IsFreeWay(int index)

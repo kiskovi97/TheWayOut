@@ -1,4 +1,5 @@
-﻿using TheWayOut.Input;
+﻿using TheWayOut.Core;
+using TheWayOut.Input;
 using UnityEngine;
 
 namespace TheWayOut.Main

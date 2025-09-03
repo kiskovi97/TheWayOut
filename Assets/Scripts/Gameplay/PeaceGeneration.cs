@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Zenject;
+
 namespace TheWayOut.Gameplay
 {
     public class PeaceGeneration : MonoBehaviour
     {
-        [SerializeField] private PuzzlePeace[] peacesPrefabs;
-        [SerializeField] private Transform peacesSelectorParent;
-        [SerializeField] private Transform goalParent;
+        [SerializeField] private SelectablePeaces selectablePeaces;
         [SerializeField] private Transform placementsParent;
         [SerializeField] private DragPlacement placementPrefab;
         [SerializeField] private GameObject block;
@@ -66,8 +66,7 @@ namespace TheWayOut.Gameplay
 
         private void ClearAll()
         {
-            foreach (Transform trans in peacesSelectorParent)
-                Destroy(trans.gameObject);
+            selectablePeaces.ClearAll();
             foreach (Transform trans in placementsParent)
                 Destroy(trans.gameObject);
             placements.Clear();
@@ -157,36 +156,15 @@ namespace TheWayOut.Gameplay
             return false;
         }
 
-        private void OnPeacePlaced(PuzzlePeace peace, DragPlacement placement)
-        {
-            if (Maze.TryAddPeace(peace))
-            {
-                peace.transform.localScale = new Vector3(1f, 1f, 1f);
-                peace.transform.SetParent(goalParent);
-                peace.isDragable = false;
-                Maze.CheckPathFinding();
-                GenerateNew();
-            }
-            else
-            {
-                peace.ReturnToPosition();
-            }
-        }
-
         private void GenerateNew()
         {
-            var randomIndex = Mathf.FloorToInt(Random.value * peacesPrefabs.Length);
-            var selected = peacesPrefabs[randomIndex];
-            var instanitated = Instantiate(selected, peacesSelectorParent);
-            instanitated.transform.rotation = Quaternion.AngleAxis(90 * Mathf.RoundToInt(Random.value * 4), Vector3.forward);
-            instanitated.OnPeacePlaced += OnPeacePlaced;
+            selectablePeaces.GenerateNew();
         }
 
         public static void ClearCurrentPeaces()
         {
-            if (Instance == null) return;
-            foreach (Transform trans in Instance.peacesSelectorParent)
-                Destroy(trans.gameObject);
+            if (Instance == null) return; 
+            Instance.selectablePeaces.ClearAll();
             Instance.GenerateNew();
             Instance.GenerateNew();
             Instance.GenerateNew();

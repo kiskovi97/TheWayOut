@@ -1,13 +1,38 @@
 {
     "m_SelectedDeviceId": "d1c199aa",
     "m_SelectedProcess": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "d1c199aa",
+        "name": "com.kiskovi.thewayout",
+        "processId": 10253,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownProcessesForSerialization": [],
+    "m_KnownProcessesForSerialization": [
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 19840,
+            "exited": true
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 30501,
+            "exited": true
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 5269,
+            "exited": false
+        },
+        {
+            "deviceId": "d1c199aa",
+            "name": "com.kiskovi.thewayout",
+            "processId": 10253,
+            "exited": false
+        }
+    ],
     "m_Tags": {
         "m_Entries": [
             {

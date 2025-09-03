@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4092058573257232929}
   - component: {fileID: 4572081558219762441}
   - component: {fileID: 3618239578082076500}
-  - component: {fileID: 6367340648535885492}
   m_Layer: 5
   m_Name: Placement
   m_TagString: Untagged
@@ -30,9 +29,9 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -67,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2586843500735790523, guid: 04c1876e374a6f44fadca9712b49b796, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 802daa289bab19548a6a3d834e1fe74a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,19 +88,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835a400fa0386bc429b2c6d594f70f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6367340648535885492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456705650842195983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9647f2002199ff94f9044222916119a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteDark: {fileID: 7203180522105767539, guid: e2f59c02d1a96b041990f2f76d894cab, type: 3}
-  spriteLight: {fileID: 2586843500735790523, guid: 04c1876e374a6f44fadca9712b49b796, type: 3}
-  colorDark: {r: 1, g: 1, b: 1, a: 1}
-  colorLight: {r: 1, g: 1, b: 1, a: 1}

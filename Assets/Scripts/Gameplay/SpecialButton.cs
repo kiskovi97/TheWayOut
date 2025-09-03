@@ -1,4 +1,5 @@
-﻿using System;
+﻿using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ namespace TheWayOut.Gameplay
     [RequireComponent(typeof(Button))]
     public abstract class SpecialButton : MonoBehaviour
     {
-        [SerializeField] private Text countText;
+        [SerializeField] private TMP_Text countText;
 
         protected Button button;
 

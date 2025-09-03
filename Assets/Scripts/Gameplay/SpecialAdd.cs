@@ -1,4 +1,5 @@
-﻿using TheWayOut.Main;
+﻿using TheWayOut.Core;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ namespace TheWayOut.Gameplay
         private async void ButtonClicked()
         {
             var success = await AdsInitializer.LoadRewardAd();
-            if (success)
+            if (success || Application.isEditor)
             {
                 ClearAllButton.StaticSpecialOne += 3;
                 ClearMazeButton.StaticSpecialOne += 1;

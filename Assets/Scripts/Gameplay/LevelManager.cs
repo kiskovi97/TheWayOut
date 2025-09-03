@@ -1,6 +1,5 @@
 ﻿using System;
 using TheWayOut.Input;
-using TheWayOut.Main;
 using UnityEngine;
 
 namespace TheWayOut.Gameplay

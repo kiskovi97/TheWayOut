@@ -1,0 +1,3 @@
+[submodule "Packages/Kiskovi.Core"]
+	path = Packages/Kiskovi.Core
+	url = https://github.com/kiskovi97/Core.git
