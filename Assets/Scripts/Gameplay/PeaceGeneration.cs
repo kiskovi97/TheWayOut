@@ -59,9 +59,7 @@ namespace TheWayOut.Gameplay
 
             GeneratePlacements(level, seed);
 
-            GenerateNew();
-            GenerateNew();
-            GenerateNew();
+            Instance.selectablePeaces.ClearAll();
         }
 
         private void ClearAll()
@@ -156,18 +154,10 @@ namespace TheWayOut.Gameplay
             return false;
         }
 
-        private void GenerateNew()
-        {
-            selectablePeaces.GenerateNew();
-        }
-
         public static void ClearCurrentPeaces()
         {
             if (Instance == null) return; 
             Instance.selectablePeaces.ClearAll();
-            Instance.GenerateNew();
-            Instance.GenerateNew();
-            Instance.GenerateNew();
         }
     }
 }

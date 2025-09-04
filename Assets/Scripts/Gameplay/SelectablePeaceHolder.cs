@@ -8,34 +8,34 @@ namespace TheWayOut.Gameplay
 {
     public class Peace : IData
     {
-        public PuzzlePeace puzzlePeace;
-        public float rotation;
+        public PeaceInfo peaceInfo;
     }
     internal class SelectablePeaceHolder : DataHolder<Peace>
     {
         public Transform peaceParent;
+        public PuzzlePeace peacesPrefab;
 
         [Inject] private DiContainer container;
+
+        private PuzzlePeace prevPeace;
 
         public override void SetData(IData itemData)
         {
             base.SetData(itemData);
 
-            if (Data == null || Data.puzzlePeace == null)
+            if (Data == null)
             {
-                foreach (Transform child in peaceParent)
-                    Destroy(child.gameObject);
+                if (prevPeace != null)
+                    prevPeace = null;
                 return;
             }
 
-            if (Data.puzzlePeace.transform.parent != peaceParent)
+            if (prevPeace == null || prevPeace.transform.parent != peaceParent)
             {
-                foreach (Transform child in peaceParent)
-                    Destroy(child.gameObject);
-                Data.puzzlePeace = container.InstantiatePrefabForComponent<PuzzlePeace>(Data.puzzlePeace, peaceParent);
+                prevPeace = container.InstantiatePrefabForComponent<PuzzlePeace>(peacesPrefab, peaceParent);
             }
 
-            Data.puzzlePeace.transform.rotation = Quaternion.Euler(0f, 0f, Data.rotation);
+            prevPeace.SetInfo(Data.peaceInfo);
         }
     }
 }

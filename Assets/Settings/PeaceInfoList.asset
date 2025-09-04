@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29c49483f033dc428bb447293a8f580, type: 3}
+  m_Name: PeaceInfoList
+  m_EditorClassIdentifier: 
+  peaceInfos:
+  - sprite: {fileID: 21300000, guid: 051aa8ec5730c73419e8de0698f85ff3, type: 3}
+    freeUp: 0
+    freeLeft: 1
+    freeRight: 1
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: cdd1e241f53f1994c8e02059a16719d1, type: 3}
+    freeUp: 1
+    freeLeft: 1
+    freeRight: 1
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 5d14ac92c350c834da175d54374e214d, type: 3}
+    freeUp: 1
+    freeLeft: 0
+    freeRight: 0
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 93f00fbffed8e864bbc98ea42b00a195, type: 3}
+    freeUp: 0
+    freeLeft: 0
+    freeRight: 1
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 226935805b4b17c44be242f6a63c1a63, type: 3}
+    freeUp: 0
+    freeLeft: 0
+    freeRight: 0
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 9cda50e2a1178774e9a2390565566fa5, type: 3}
+    freeUp: 0
+    freeLeft: 1
+    freeRight: 0
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: afa39a1e5b1bdd140918621c9b20d835, type: 3}
+    freeUp: 1
+    freeLeft: 0
+    freeRight: 1
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: b9484a1c518827b42943317504a47a55, type: 3}
+    freeUp: 1
+    freeLeft: 1
+    freeRight: 0
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 3df3af67306c07a479d897837a070a2e, type: 3}
+    freeUp: 0
+    freeLeft: 0
+    freeRight: 1
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: d5007dd0f59ed2942bed3f6c030b1b19, type: 3}
+    freeUp: 0
+    freeLeft: 1
+    freeRight: 0
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 16ef45772b5e19f43b869a661fd6fc5e, type: 3}
+    freeUp: 1
+    freeLeft: 1
+    freeRight: 0
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 9708f49ff68c6fc40ae33ef994d6b9bd, type: 3}
+    freeUp: 1
+    freeLeft: 1
+    freeRight: 1
+    freeDown: 0
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: f50fab3b8d5ea8d468ba0d6ddce87984, type: 3}
+    freeUp: 0
+    freeLeft: 1
+    freeRight: 1
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 2a98065cdcdacad4e84576d5bb795673, type: 3}
+    freeUp: 1
+    freeLeft: 0
+    freeRight: 1
+    freeDown: 1
+    minLevel: 0
+  - sprite: {fileID: 21300000, guid: 17c294f3826935d42a35e4181e8258fd, type: 3}
+    freeUp: 1
+    freeLeft: 0
+    freeRight: 0
+    freeDown: 1
+    minLevel: 0

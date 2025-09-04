@@ -1,6 +1,7 @@
 ﻿
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Zenject;
 
@@ -13,7 +14,11 @@ namespace TheWayOut.Gameplay
     }
     public class PuzzlePeace : DragObject
     {
-        [SerializeField] private bool[] freeWay;
+        public Image mainImage;
+        private PeaceInfo _info;
+        private bool[] freeWay = new bool[4];
+
+        public PeaceInfo Info => _info;
 
         [Inject] private SignalBus signalBus;
 
@@ -39,6 +44,20 @@ namespace TheWayOut.Gameplay
             var realIndex = Mathf.FloorToInt(Mathf.Repeat(index + rotation, 3.9f));
 
             return freeWay[realIndex];
+        }
+
+        internal void SetInfo(PeaceInfo peaceInfo)
+        {
+            if (peaceInfo == null) return;
+            _info = peaceInfo;
+            freeWay = new bool[]
+            {
+                peaceInfo.freeLeft,
+                peaceInfo.freeUp,
+                peaceInfo.freeRight,
+                peaceInfo.freeDown,
+            };
+            mainImage.sprite = peaceInfo.sprite;
         }
     }
 }
