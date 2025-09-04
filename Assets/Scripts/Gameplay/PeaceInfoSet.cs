@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using UnityEngine;
 
 namespace TheWayOut.Gameplay
 {
+    public enum PeaceDirection
+    {
+        Left = 0,
+        Up = 1,
+        Right = 2,
+        Down = 3
+    }
+
     [Serializable]
     public class PeaceInfo
     {

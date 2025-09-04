@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Kiskovi.Core;
 
@@ -55,8 +56,10 @@ namespace TheWayOut.Gameplay
 
         private PeaceInfo GenerateNew()
         {
-            var randomIndex = Mathf.FloorToInt(UnityEngine.Random.value * PeaceInfoSet.peaceInfos.Count);
-            return PeaceInfoSet.peaceInfos[randomIndex];
+            var okPeaces = PeaceInfoSet.peaceInfos.Where(item => Maze.IsTherePlace(item)).ToArray();
+            if (okPeaces.Any()) 
+                return okPeaces[UnityEngine.Random.Range(0, okPeaces.Length)];
+            return PeaceInfoSet.peaceInfos[UnityEngine.Random.Range(0, PeaceInfoSet.peaceInfos.Count)];
         }
 
         internal void ClearAll()

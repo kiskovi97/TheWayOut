@@ -1,5 +1,6 @@
 ﻿
 using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,6 @@ namespace TheWayOut.Gameplay
     {
         public Image mainImage;
         private PeaceInfo _info;
-        private bool[] freeWay = new bool[4];
 
         public PeaceInfo Info => _info;
 
@@ -33,30 +33,27 @@ namespace TheWayOut.Gameplay
                 signalBus.Fire(new PeacePlacedSignal() { placement = placement, peace = this });
         }
 
-        internal bool IsFreeWay(int index)
+        internal bool IsFreeWay(PeaceDirection index)
         {
-            index = (int)Mathf.Repeat(index, freeWay.Length);
-            var rotation = transform.rotation.eulerAngles.z / 90;
+            switch (index)
+            {
+                case PeaceDirection.Left:
+                    return _info.freeLeft;
+                case PeaceDirection.Right:
+                    return _info.freeRight;
+                case PeaceDirection.Up:
+                    return _info.freeUp;
+                case PeaceDirection.Down:
+                    return _info.freeDown;
+            }
 
-            if (index >= freeWay.Length)
-                return false;
-
-            var realIndex = Mathf.FloorToInt(Mathf.Repeat(index + rotation, 3.9f));
-
-            return freeWay[realIndex];
+            return false;
         }
 
         internal void SetInfo(PeaceInfo peaceInfo)
         {
             if (peaceInfo == null) return;
             _info = peaceInfo;
-            freeWay = new bool[]
-            {
-                peaceInfo.freeLeft,
-                peaceInfo.freeUp,
-                peaceInfo.freeRight,
-                peaceInfo.freeDown,
-            };
             mainImage.sprite = peaceInfo.sprite;
         }
     }

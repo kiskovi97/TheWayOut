@@ -118,59 +118,95 @@ namespace TheWayOut.Gameplay
 
         public static bool TryAddPeace(PuzzlePeace peace)
         {
-            var available = IsAvailable(peace);
+            var available = IsAvailable(peace.Info, peace.Index);
             if (available)
                 placedPeaces.Add(peace.Index, peace);
             return available;
         }
 
-        private static bool IsAvailable(PuzzlePeace peace)
+        public static bool IsTherePlace(PeaceInfo info)
         {
-            if (placedPeaces.ContainsKey(peace.Index))
+            for(int place = 0; place < Column * Column; place++)
+            {
+                if (!IsAvailable(info, place))
+                    continue;
+
+                if (place == StartIndex || place == EndIndex
+                    || IsThere(PeaceDirection.Left, place) 
+                    || IsThere(PeaceDirection.Right, place) 
+                    || IsThere(PeaceDirection.Up, place) 
+                    || IsThere(PeaceDirection.Down, place))
+                    return true;
+            }
+            return false;
+        }
+
+        private static int NextIndex(PeaceDirection direction, int index)
+        {
+            var nextIndex = index;
+            switch (direction)
+            {
+                case PeaceDirection.Left:
+                    if (index % Column > 0)
+                        nextIndex = index - 1;
+                    break;
+                case PeaceDirection.Right:
+                    if (index % Column < Column - 1)
+                        nextIndex = index + 1;
+                    break;
+                case PeaceDirection.Up:
+                    if (index - Column > 0)
+                        nextIndex = index - Column;
+                    break;
+                case PeaceDirection.Down:
+                    if (index + Column < Column * Column)
+                        nextIndex = index + Column;
+                    break;
+            }
+            return nextIndex;
+        }
+
+        private static bool IsAvailable(PeaceInfo peace, int Index)
+        {
+            if (placedPeaces.ContainsKey(Index))
                 return false;
 
-            if (peace.Index == StartIndex && !peace.IsFreeWay(0))
+            if (Index == StartIndex && !peace.freeLeft)
                 return false;
 
-            if (peace.Index == EndIndex && !peace.IsFreeWay(2))
+            if (Index == EndIndex && !peace.freeRight)
                 return false;
 
-            var column = peace.Index % Column;
-            var row = Mathf.FloorToInt((float)peace.Index / Column);
-
-            var index = peace.Index - 1;
-            if (column > 0 && placedPeaces.ContainsKey(index))
-            {
-                var peace2 = placedPeaces[index];
-                if ((peace2.IsFreeWay(2) && !peace.IsFreeWay(0)) || (!peace2.IsFreeWay(2) && peace.IsFreeWay(0)))
-                    return false;
-            }
-
-            index = peace.Index - Column;
-            if (row > 0 && placedPeaces.ContainsKey(index))
-            {
-                var peace2 = placedPeaces[index];
-                if ((peace2.IsFreeWay(3) && !peace.IsFreeWay(1)) || (!peace2.IsFreeWay(3) && peace.IsFreeWay(1)))
-                    return false;
-            }
-
-            index = peace.Index + 1;
-            if (column < Column - 1 && placedPeaces.ContainsKey(index))
-            {
-                var peace2 = placedPeaces[index];
-                if ((peace2.IsFreeWay(0) && !peace.IsFreeWay(2)) || (!peace2.IsFreeWay(0) && peace.IsFreeWay(2)))
-                    return false;
-            }
-
-            index = peace.Index + Column;
-            if (row < Column - 1 && placedPeaces.ContainsKey(index))
-            {
-                var peace2 = placedPeaces[index];
-                if ((peace2.IsFreeWay(1) && !peace.IsFreeWay(3)) || (!peace2.IsFreeWay(1) && peace.IsFreeWay(3)))
-                    return false;
-            }
+            if (!IsAvailable(PeaceDirection.Left, Index, peace.freeLeft))
+                return false;
+            if (!IsAvailable(PeaceDirection.Right, Index, peace.freeRight))
+                return false;
+            if (!IsAvailable(PeaceDirection.Up, Index, peace.freeUp))
+                return false;
+            if (!IsAvailable(PeaceDirection.Down, Index, peace.freeDown))
+                return false;
 
             return true;
+        }
+
+        private static bool IsAvailable(PeaceDirection direction, int Index, bool isFreeWay)
+        {
+            var leftIndex = NextIndex(direction, Index);
+            var oposite = (direction) switch
+            {
+                PeaceDirection.Left => PeaceDirection.Right,
+                PeaceDirection.Right => PeaceDirection.Left,
+                PeaceDirection.Up => PeaceDirection.Down,
+                PeaceDirection.Down => PeaceDirection.Up,
+                _ => PeaceDirection.Right,
+            };
+            return !placedPeaces.TryGetValue(leftIndex, out var leftPeace) || leftPeace.IsFreeWay(oposite) == isFreeWay;
+        }
+
+        private static bool IsThere(PeaceDirection direction, int Index)
+        {
+            var leftIndex = NextIndex(direction, Index);
+            return placedPeaces.ContainsKey(leftIndex);
         }
 
         private static int[] NextIndexes(PuzzlePeace peace)
@@ -179,17 +215,16 @@ namespace TheWayOut.Gameplay
             if (!placedPeaces.ContainsKey(index))
                 return new int[0];
             var listIndexes = new List<int>();
-            if (index % Column != 0 && placedPeaces.ContainsKey(index - 1) && peace.IsFreeWay(0) && placedPeaces[index - 1].IsFreeWay(2))
+            if (index % Column != 0 && placedPeaces.ContainsKey(index - 1) && peace.IsFreeWay(PeaceDirection.Left) && placedPeaces[index - 1].IsFreeWay(PeaceDirection.Right))
                 listIndexes.Add(index - 1);
 
-
-            if (placedPeaces.ContainsKey(index - Column) && peace.IsFreeWay(1) && placedPeaces[index - Column].IsFreeWay(3))
+            if (placedPeaces.ContainsKey(index - Column) && peace.IsFreeWay(PeaceDirection.Up) && placedPeaces[index - Column].IsFreeWay(PeaceDirection.Down))
                 listIndexes.Add(index - Column);
 
-            if (index % Column != Column - 1 && placedPeaces.ContainsKey(index + 1) && peace.IsFreeWay(2) && placedPeaces[index + 1].IsFreeWay(0))
+            if (index % Column != Column - 1 && placedPeaces.ContainsKey(index + 1) && peace.IsFreeWay(PeaceDirection.Right) && placedPeaces[index + 1].IsFreeWay(PeaceDirection.Left))
                 listIndexes.Add(index + 1);
 
-            if (placedPeaces.ContainsKey(index + Column) && peace.IsFreeWay(3) && placedPeaces[index + Column].IsFreeWay(1))
+            if (placedPeaces.ContainsKey(index + Column) && peace.IsFreeWay(PeaceDirection.Down) && placedPeaces[index + Column].IsFreeWay(PeaceDirection.Up))
                 listIndexes.Add(index + Column);
 
             return listIndexes.ToArray();
