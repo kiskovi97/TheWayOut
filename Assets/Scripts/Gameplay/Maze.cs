@@ -206,7 +206,8 @@ namespace TheWayOut.Gameplay
         private static bool IsThere(PeaceDirection direction, int Index)
         {
             var leftIndex = NextIndex(direction, Index);
-            return placedPeaces.ContainsKey(leftIndex);
+            var oposite = (PeaceDirection)Mathf.RoundToInt(Mathf.Repeat((int)direction + 2, 4));
+            return placedPeaces.TryGetValue(leftIndex, out var value) && value.IsFreeWay(oposite);
         }
 
         private static int[] NextIndexes(PuzzlePeace peace)

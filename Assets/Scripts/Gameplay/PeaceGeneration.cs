@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 using Zenject;
 
@@ -91,7 +92,9 @@ namespace TheWayOut.Gameplay
                     continue;
                 }
 
-                if (Random.value < 0.01f * level)
+                var center = Maze.Column * Maze.Column / 2;
+                var centerBias = Mathf.PingPong(1f - (float)i / center, 1f);
+                if (Random.value < 0.02f * level * centerBias)
                 {
                     matrix[index] = 1;
                     if (!CheckAvaiability(matrix))
