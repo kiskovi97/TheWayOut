@@ -25,30 +25,6 @@ MonoBehaviour:
     freeRight: 1
     freeDown: 1
     minLevel: 0
-  - sprite: {fileID: 21300000, guid: 5d14ac92c350c834da175d54374e214d, type: 3}
-    freeUp: 1
-    freeLeft: 0
-    freeRight: 0
-    freeDown: 0
-    minLevel: 0
-  - sprite: {fileID: 21300000, guid: 93f00fbffed8e864bbc98ea42b00a195, type: 3}
-    freeUp: 0
-    freeLeft: 0
-    freeRight: 1
-    freeDown: 0
-    minLevel: 0
-  - sprite: {fileID: 21300000, guid: 226935805b4b17c44be242f6a63c1a63, type: 3}
-    freeUp: 0
-    freeLeft: 0
-    freeRight: 0
-    freeDown: 1
-    minLevel: 0
-  - sprite: {fileID: 21300000, guid: 9cda50e2a1178774e9a2390565566fa5, type: 3}
-    freeUp: 0
-    freeLeft: 1
-    freeRight: 0
-    freeDown: 0
-    minLevel: 0
   - sprite: {fileID: 21300000, guid: afa39a1e5b1bdd140918621c9b20d835, type: 3}
     freeUp: 1
     freeLeft: 0

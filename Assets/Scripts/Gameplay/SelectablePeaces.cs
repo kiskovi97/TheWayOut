@@ -56,9 +56,14 @@ namespace TheWayOut.Gameplay
 
         private PeaceInfo GenerateNew()
         {
-            var okPeaces = PeaceInfoSet.peaceInfos.Where(item => Maze.IsTherePlace(item)).ToArray();
+            var okPeaces = PeaceInfoSet.peaceInfos.Where(item => Maze.IsTherePlace(item) && !peaces.Any(peace => peace.peaceInfo == item)).ToArray();
             if (okPeaces.Any()) 
                 return okPeaces[UnityEngine.Random.Range(0, okPeaces.Length)];
+            Debug.LogWarning("No available peace, trying notSame");
+            var notSame = PeaceInfoSet.peaceInfos.Where(item => !peaces.Any(peace => peace.peaceInfo == item)).ToArray();
+            if (notSame.Any())
+                return notSame[UnityEngine.Random.Range(0, notSame.Length)];
+            Debug.LogWarning("No available notsame peace, returning random");
             return PeaceInfoSet.peaceInfos[UnityEngine.Random.Range(0, PeaceInfoSet.peaceInfos.Count)];
         }
 

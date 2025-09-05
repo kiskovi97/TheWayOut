@@ -92,8 +92,8 @@ namespace TheWayOut.Gameplay
                     continue;
                 }
 
-                var center = Maze.Column * Maze.Column / 2;
-                var centerBias = Mathf.PingPong(1f - (float)i / center, 1f);
+                var center = Maze.Column * Maze.Column / 2f;
+                var centerBias = Mathf.PingPong((float)index / center, 1f);
                 if (Random.value < 0.02f * level * centerBias)
                 {
                     matrix[index] = 1;
