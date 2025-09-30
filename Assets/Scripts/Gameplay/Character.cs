@@ -5,6 +5,8 @@ namespace TheWayOut.Gameplay
 {
     class Character : MonoBehaviour
     {
+        public Animator animator;
+
         private Vector3[] positions = new Vector3[0];
         private int currentindex = 0;
 
@@ -15,6 +17,8 @@ namespace TheWayOut.Gameplay
             this.positions = positions;
             currentindex = 0;
             this.OnFinished = OnFinished;
+            if (animator != null)
+                animator.SetTrigger("Move");
         }
 
         private void Update()
