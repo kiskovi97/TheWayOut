@@ -65,7 +65,7 @@ namespace TheWayOut.Core
             return rewardTaskSource.Task;
         }
 
-        private static void RewardedAd_OnAdClosed(com.unity3d.mediation.LevelPlayAdInfo obj)
+        private static void RewardedAd_OnAdClosed(LevelPlayAdInfo obj)
         {
             if (!rewardTaskSource.Task.IsCompleted)
             {
@@ -75,17 +75,17 @@ namespace TheWayOut.Core
         }
 
 
-        private static void RewardedAd_OnAdRewarded(com.unity3d.mediation.LevelPlayAdInfo arg1, com.unity3d.mediation.LevelPlayReward arg2)
+        private static void RewardedAd_OnAdRewarded(LevelPlayAdInfo arg1, LevelPlayReward arg2)
         {
             rewardTaskSource?.TrySetResult(true);
         }
 
-        private void SdkInitializationFailedEvent(com.unity3d.mediation.LevelPlayInitError error)
+        private void SdkInitializationFailedEvent(LevelPlayInitError error)
         {
             Debug.LogError("SdkInitializationFailedEvent");
         }
 
-        private void SdkInitializationCompletedEvent(com.unity3d.mediation.LevelPlayConfiguration configuration)
+        private void SdkInitializationCompletedEvent(LevelPlayConfiguration configuration)
         {
             Debug.Log("SdkInitializationCompletedEvent");
 
@@ -95,8 +95,8 @@ namespace TheWayOut.Core
             }
 
             var config = new LevelPlayBannerAd.Config.Builder()
-                .SetPosition(com.unity3d.mediation.LevelPlayBannerPosition.TopCenter)
-                .SetSize(com.unity3d.mediation.LevelPlayAdSize.BANNER);
+                .SetPosition(LevelPlayBannerPosition.TopCenter)
+                .SetSize(LevelPlayAdSize.BANNER);
 
             bannerAd = new LevelPlayBannerAd(bannerAdUnitId, config.Build());
 
@@ -118,35 +118,35 @@ namespace TheWayOut.Core
             rewardedAd.OnAdClosed += RewardedAd_OnAdClosed;
         }
 
-        private void RewardedAd_OnAdLoadFailed(com.unity3d.mediation.LevelPlayAdError obj)
+        private void RewardedAd_OnAdLoadFailed(LevelPlayAdError obj)
         {
             Debug.LogError("RewardedAd_OnAdLoadFailed: " + obj.ErrorMessage);
             rewardTaskSource?.TrySetResult(false);
         }
-        private void InterstitialAd_OnAdLoadFailed(com.unity3d.mediation.LevelPlayAdError obj)
+        private void InterstitialAd_OnAdLoadFailed(LevelPlayAdError obj)
         {
             Debug.LogError("InterstitialAd_OnAdLoadFailed: " + obj.ErrorMessage);
         }
 
-        private void BannerAd_OnAdLoadFailed(com.unity3d.mediation.LevelPlayAdError obj)
+        private void BannerAd_OnAdLoadFailed(LevelPlayAdError obj)
         {
             Debug.LogError("BannerAd_OnAdLoadFailed: " + obj.ErrorMessage);
             Invoke(nameof(ReloadBanner), 10f);
         }
 
-        private void RewardedAd_OnAdLoaded(com.unity3d.mediation.LevelPlayAdInfo obj)
+        private void RewardedAd_OnAdLoaded(LevelPlayAdInfo obj)
         {
             rewardedAd.ShowAd();
             Debug.Log("RewardedAd_OnAdLoaded");
         }
 
-        private void InterstitialAd_OnAdLoaded(com.unity3d.mediation.LevelPlayAdInfo obj)
+        private void InterstitialAd_OnAdLoaded(LevelPlayAdInfo obj)
         {
             interstitialAd.ShowAd();
             Debug.Log("InterstitialAd_OnAdLoaded");
         }
 
-        private void BannerAd_OnAdLoaded(com.unity3d.mediation.LevelPlayAdInfo obj)
+        private void BannerAd_OnAdLoaded(LevelPlayAdInfo obj)
         {
             Debug.Log("BannerAd_OnAdLoaded");
             bannerAd.ShowAd();
